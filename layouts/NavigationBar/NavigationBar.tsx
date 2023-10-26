@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const NavigationBar = () => {
     return (
-        <div className='w-full py-6 bg-teal-400 px-12 md:px-6 lg:px-0'>
+        <div className='w-full py-6 bg-teal-400 px-10 md:px-12 xl:px-16 2xl:px-0'>
             <nav className='w-full max-w-7xl mx-auto flex items-center justify-between'>
                 <Link href={"/"}>
                     <Image 

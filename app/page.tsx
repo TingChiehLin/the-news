@@ -116,7 +116,7 @@ const Home:NextPage = () => {
 
   return (
     <>
-      <main className='w-full max-w-7xl mx-auto flex items-start justify-center py-20 px-12 md:px-6 lg:px-0'>
+      <main className='w-full max-w-7xl mx-auto flex items-start justify-center py-20 px-10 md:px-12 xl:px-16 2xl:px-0'>
         <div className="flex flex-col gap-12">
           {!isSuccess && !isSearch && (
             <>
@@ -143,7 +143,7 @@ const Home:NextPage = () => {
                 <Button
                     text="Search"
                     type="button"
-                    isdisable={isError}
+                    isdisable={isError ? true : undefined}
                     onClick={handleSubmit}
                 />
               </div>
@@ -168,7 +168,7 @@ const Home:NextPage = () => {
                   <Button
                     text="Search"
                     type="button"
-                    isdisable={isError}
+                    isdisable={isError ? true : undefined}
                     onClick={handleSubmit}
                   />
                 </div>
