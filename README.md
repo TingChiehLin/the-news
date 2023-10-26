@@ -18,7 +18,7 @@ The project is to show articles with title, image and description
 
 ## Demo
 
-You can see my project on Vercel [Demo Link](https://news-app-coral-theta.vercel.app/)
+You can see my project on Vercel [Demo Link]()
 
 ## Getting Started
 
