@@ -17,6 +17,7 @@ import PaginationBar from "@/components/PaginationBar";
 const initialState: NewsState = {
   searchQuery: "",
   keyword:"",
+  articles: [],
   errormessage: "",
   currentPage: 1,
   date: "25/10/2023"
@@ -33,7 +34,15 @@ const newsReducer = (state: NewsState, action: NewsAction):NewsState => {
       searchQuery: newSearchQuery,
       errormessage: "",
     }
-  } else if(type === "SEARCH_NEWS_SUBMIT") {
+  } else if(type === "UPDATE_ARTICLES") {
+    const newArticles = payload?.articles;
+    if(newArticles === undefined) return state
+    return {
+      ...state,
+      articles: newArticles,
+    }
+  }  
+  else if(type === "SEARCH_NEWS_SUBMIT") {
     return {
       ...state,
       errormessage: "",
@@ -76,12 +85,18 @@ const Home:NextPage = () => {
   const [state, dispatch] = React.useReducer(newsReducer, initialState);
   const [isSearch, setIsSearch] = React.useState(false);
   const {data: newsData, isLoading, isSuccess, isError} = useNews(state.keyword); 
-  const {searchQuery, errormessage,currentPage} = state;
+  const {searchQuery, articles, errormessage,currentPage} = state;
 
   const newsPerPage = 9;
   const start = (currentPage - 1) * newsPerPage;
   const end = currentPage * newsPerPage;
-  const formattedNewsData = (newsData?.articles ?? []).slice(start, end);
+  const formattedNewsData = articles.slice(start, end);
+
+  React.useEffect(() => {
+    if(newsData?.articles) {
+      dispatch({type: "UPDATE_ARTICLES", payload: {articles: newsData?.articles}})
+    }
+  },[newsData?.articles])
  
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
