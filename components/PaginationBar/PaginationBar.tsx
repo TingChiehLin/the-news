@@ -13,7 +13,7 @@ const PagnationBar:React.FC<PagnationBarTypeProp> = ({currentPage, totalPage, ha
   const lastPage = currentPage >= totalPage;
 
   return (
-    <nav className="flex items-center justify-between border-t border-slate-200 px-4 sm:px-0 mt-16">
+    <nav className="flex items-center justify-between border-t border-slate-200 px-4 sm:px-0">
       <div className="-mt-px flex w-0 flex-1">
         <button
           onClick={handlePrevPage}

@@ -6,80 +6,13 @@ import Image from "next/image";
 import Button from "@/components/Button";
 import { NextPage } from "next";
 
-import { NewsState, NewsAction } from "@/services/newsType";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import NewsSection from "@/layouts/NewsSection";
+import PaginationBar from "@/components/PaginationBar";
 // import DateFilter from "@/components/DateFilter";
 
 import { useNews } from "@/services/api";
-import PaginationBar from "@/components/PaginationBar";
-
-const initialState: NewsState = {
-  searchQuery: "",
-  keyword:"",
-  articles: [],
-  errormessage: "",
-  currentPage: 1,
-  date: "25/10/2023"
-}
-
-const newsReducer = (state: NewsState, action: NewsAction):NewsState => {
-  const { type, payload } = action;
-
-  if(type === "SEARCH_NEWS_QUERY") {
-    const newSearchQuery = payload?.searchQuery;
-    if(newSearchQuery === undefined) return state
-    return {
-      ...state,
-      searchQuery: newSearchQuery,
-      errormessage: "",
-    }
-  } else if(type === "UPDATE_ARTICLES") {
-    const newArticles = payload?.articles;
-    if(newArticles === undefined) return state
-    return {
-      ...state,
-      articles: newArticles,
-    }
-  }  
-  else if(type === "SEARCH_NEWS_SUBMIT") {
-    return {
-      ...state,
-      errormessage: "",
-      keyword: state.searchQuery,
-    }
-  } else if(type === "SEARCH_NEWS_BLUR") {
-    return {
-      ...state,
-      errormessage: "",
-    }
-  } else if(type === "SEARCH_NEWS_QUERY_EMPTY") {
-    return {
-      ...state,
-      errormessage: "Please input news title",
-    }
-  } else if(type === "PAGE_SELECT") {
-    const newPage = payload?.selectedpage;
-    return {
-      ...state,
-      currentPage: newPage || 1,
-    }
-
-  } else if(type === "LAST_PAGE") {
-    return {
-      ...state,
-      currentPage: state.currentPage - 1,
-    }
-  } else if(type === "NEXT_PAGE") {
-    return {
-      ...state,
-      currentPage: state.currentPage + 1,
-    }
-  }
-  else {
-    throw new Error("This action type does not support")
-  }
-}
+import { newsReducer, initialState } from "@/reducers/newsReducer";
 
 const Home:NextPage = () => {
   const [state, dispatch] = React.useReducer(newsReducer, initialState);
@@ -166,7 +99,7 @@ const Home:NextPage = () => {
           )}
         </div>
         {isSuccess && (
-          <div className="w-full flex flex-col gap-12">
+          <div className="w-full flex flex-col gap-20">
             <div className="w-full flex justify-between items-baseline">
               <div className="flex gap-x-6">
                 <SearchBar
