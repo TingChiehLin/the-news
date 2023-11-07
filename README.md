@@ -8,17 +8,12 @@ The project is to show articles with title, image and description
 
 - [News App](#news-app)
 - [Table of contents](#table-of-contents)
-- [Demo](#demo)
 - [Getting Started](#getting-started)
 - [Tech I used](#tech-i-used)
 - [Feature](#feature)
 - [Future Plan](#future-plan)
 - [Design](#design)
 - [Learn More](#learn-more)
-
-## Demo
-
-You can see my project on Vercel [Demo Link]()
 
 ## Getting Started
 
