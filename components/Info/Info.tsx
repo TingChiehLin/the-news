@@ -6,22 +6,41 @@ import Image from "next/image";
 import { HiXMark } from "react-icons/hi2";
 
 import { ArticleField } from "@/services/articleType";
+import React from "react";
 
 interface InfoTypeProp {
     onClose?: () => void;    
 }   
 
+const getCurrentDimensions = () => {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    return {
+        width, height
+    }
+}
+
 const Info:FC<InfoTypeProp & ArticleField> = ({...props}) => {
+    const [screenSize, setScreenSize] = React.useState(getCurrentDimensions());
     const {title, author, urlToImage, publishedAt, content, onClose} = props;
     const newFormatDate = new Date(publishedAt).toLocaleDateString("en-AU", {
         year: "numeric",
         month: "long",
         day: "numeric"
     })
+
+    React.useEffect(() => {
+        const handleResize = () => {
+            setScreenSize(getCurrentDimensions());
+        }
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    })   
+
     return (
         <>
             <div className="w-full max-w-lg md:max-w-3xl lg:max-w-4xl px-12 md:px-16 pt-6 pb-12 md:pb-16 bg-slate-50 rounded-2xl shadow-xl 
-                            absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30"
+                            fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30"
             >
                     <HiXMark size={"2rem"}
                             className='cursor-pointer text-slate-700 ml-auto mb-6'
