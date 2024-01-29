@@ -1,14 +1,14 @@
 import { FC } from "react";
 
 interface ModalTypeProp {
-    isOpen: boolean
+    isOpen: boolean,
     children: React.ReactNode
 }
 
 const Modal:FC<ModalTypeProp> = ({...props}) => {
     const {isOpen, children} = props;
     return (
-        <div>
+        <>
            <div className={`fixed inset-0 
                             over-flow-x-auto
                             over-flow-y-auto
@@ -22,7 +22,7 @@ const Modal:FC<ModalTypeProp> = ({...props}) => {
            >
            </div>
            {children}
-        </div>
+        </>
     )
 }   
 

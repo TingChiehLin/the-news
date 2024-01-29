@@ -1,18 +1,43 @@
 import * as React from "react";
 
 import { ArticleField } from "@/services/articleType";
-import Image from "next/image";
 import Modal from "../Modal";
 import Info from "../Info";
 
 const Article:React.FC<ArticleField> = ({...props}) => {
     const [isOpen, setIsOpen] = React.useState(false);
+    const ref = React.useRef<HTMLDivElement>(null);
+
     const {title, description, urlToImage} = props;
     
     const handleClick = () => {
         setIsOpen(!isOpen);
     }
     
+    React.useEffect(()=> {
+        if(isOpen) {
+
+            const handleESC = (event:KeyboardEvent) => {
+                if(event.key === "Escape") {
+                    setIsOpen(false);
+                }
+            }
+            const handleMouseClick = (event:MouseEvent) => {
+                const element = ref.current;
+                if(element && !element.contains(event.target as Node)) {
+                    setIsOpen(false);
+                }
+            }
+
+            document.addEventListener("click", handleMouseClick);
+            document.addEventListener("keydown", handleESC);
+
+            return () => {
+                document.removeEventListener("keydown", handleESC);
+                document.removeEventListener("click", handleMouseClick);
+            }
+        }
+    },[isOpen])
     return (
         <div>
             {/* If I used next/image, I will get this security issues due to image sources from external sites
@@ -39,7 +64,7 @@ const Article:React.FC<ArticleField> = ({...props}) => {
                 isOpen && (
                     <>
                         <Modal isOpen={isOpen}>
-                            <Info {...props} onClose={handleClick}/>
+                            <Info {...props} onClose={handleClick} reference={ref}/>
                         </Modal>
                     </>
                 )
